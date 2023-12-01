@@ -43,6 +43,7 @@ export const ServerHeader = ({ server, role }: ServerHeaderProps) => {
       <DropdownMenuContent className="w-56 text-xs font-medium text-black dark:text-neutral-400 space-y-[2px]">
         {isModerator && (
           <DropdownMenuItem
+            onClick={() => onOpen("invite", { server })}
             className="text-indigo-600 dark:text-indigo-400 px-3 py-2 text-sm cursor-pointer"
           >
             邀請其他人
@@ -51,6 +52,7 @@ export const ServerHeader = ({ server, role }: ServerHeaderProps) => {
         )}
         {isAdmin && (
           <DropdownMenuItem
+            // onClick={() => onOpen("editServer", { server })}
             className="px-3 py-2 text-sm cursor-pointer"
           >
             伺服器設定
@@ -59,6 +61,7 @@ export const ServerHeader = ({ server, role }: ServerHeaderProps) => {
         )}
         {isAdmin && (
           <DropdownMenuItem
+            // onClick={() => onOpen("members", { server })}
             className="px-3 py-2 text-sm cursor-pointer"
           >
             管理成員
@@ -67,6 +70,7 @@ export const ServerHeader = ({ server, role }: ServerHeaderProps) => {
         )}
         {isModerator && (
           <DropdownMenuItem
+            // onClick={() => onOpen("createChannel")}
             className="px-3 py-2 text-sm cursor-pointer"
           >
             創建頻道
@@ -76,6 +80,7 @@ export const ServerHeader = ({ server, role }: ServerHeaderProps) => {
         {isModerator && <DropdownMenuSeparator />}
         {isAdmin && (
           <DropdownMenuItem
+            // onClick={() => onOpen("deleteServer", { server })}
             className="text-rose-500 px-3 py-2 text-sm cursor-pointer"
           >
             刪除伺服器
@@ -84,6 +89,7 @@ export const ServerHeader = ({ server, role }: ServerHeaderProps) => {
         )}
         {!isAdmin && (
           <DropdownMenuItem
+            // onClick={() => onOpen("leaveServer", { server })}
             className="text-rose-500 px-3 py-2 text-sm cursor-pointer"
           >
             離開伺服器
