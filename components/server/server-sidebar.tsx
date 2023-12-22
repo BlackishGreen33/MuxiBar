@@ -8,7 +8,7 @@ import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 
 import { ServerHeader } from "./server-header";
-// import { ServerSearch } from "./server-search";
+import { ServerSearch } from "./server-search";
 // import { ServerSection } from "./server-section";
 // import { ServerChannel } from "./server-channel";
 // import { ServerMember } from "./server-member";
@@ -16,6 +16,20 @@ import { ServerHeader } from "./server-header";
 interface ServerSidebarProps {
   serverId: string;
 }
+
+const iconMap = {
+  [ChannelType.TEXT]: <Hash className="mr-2 h-4 w-4" />,
+  [ChannelType.AUDIO]: <Mic className="mr-2 h-4 w-4" />,
+  [ChannelType.VIDEO]: <Video className="mr-2 h-4 w-4" />,
+};
+
+const roleIconMap = {
+  [MemberRole.GUEST]: null,
+  [MemberRole.MODERATOR]: (
+    <ShieldCheck className="h-4 w-4 mr-2 text-indigo-500" />
+  ),
+  [MemberRole.ADMIN]: <ShieldAlert className="h-4 w-4 mr-2 text-rose-500" />,
+};
 
 export const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
   const profile = await currentProfile();
@@ -69,6 +83,52 @@ export const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
   return (
     <div className="flex flex-col h-full text-primary w-full dark:bg-[#2B2D31] bg-[#F2F3F5]">
       <ServerHeader server={server} role={role} />
+      <ScrollArea className="flex-1 px-3">
+        <div className="mt-2">
+          <ServerSearch
+            data={
+              [
+                {
+                  label: "文字頻道",
+                  type: "channel",
+                  data: textChannels?.map((channel) => ({
+                    id: channel.id,
+                    name: channel.name,
+                    icon: iconMap[channel.type],
+                  })),
+                },
+                {
+                  label: "語音頻道",
+                  type: "channel",
+                  data: audioChannels?.map((channel) => ({
+                    id: channel.id,
+                    name: channel.name,
+                    icon: iconMap[channel.type],
+                  })),
+                },
+                {
+                  label: "視訊頻道",
+                  type: "channel",
+                  data: videoChannels?.map((channel) => ({
+                    id: channel.id,
+                    name: channel.name,
+                    icon: iconMap[channel.type],
+                  })),
+                },
+                {
+                  label: "伺服器成員",
+                  type: "member",
+                  data: members?.map((member) => ({
+                    id: member.id,
+                    name: member.profile.name,
+                    icon: roleIconMap[member.role],
+                  })),
+                },
+              ]
+            }
+          />
+        </div>
+      </ScrollArea>
     </div>
   );
 };
