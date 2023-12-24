@@ -9,9 +9,9 @@ import { db } from "@/lib/db";
 
 import { ServerHeader } from "./server-header";
 import { ServerSearch } from "./server-search";
-// import { ServerSection } from "./server-section";
-// import { ServerChannel } from "./server-channel";
-// import { ServerMember } from "./server-member";
+import { ServerSection } from "./server-section";
+import { ServerChannel } from "./server-channel";
+import { ServerMember } from "./server-member";
 
 interface ServerSidebarProps {
   serverId: string;
@@ -86,48 +86,122 @@ export const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
       <ScrollArea className="flex-1 px-3">
         <div className="mt-2">
           <ServerSearch
-            data={
-              [
-                {
-                  label: "文字頻道",
-                  type: "channel",
-                  data: textChannels?.map((channel) => ({
-                    id: channel.id,
-                    name: channel.name,
-                    icon: iconMap[channel.type],
-                  })),
-                },
-                {
-                  label: "語音頻道",
-                  type: "channel",
-                  data: audioChannels?.map((channel) => ({
-                    id: channel.id,
-                    name: channel.name,
-                    icon: iconMap[channel.type],
-                  })),
-                },
-                {
-                  label: "視訊頻道",
-                  type: "channel",
-                  data: videoChannels?.map((channel) => ({
-                    id: channel.id,
-                    name: channel.name,
-                    icon: iconMap[channel.type],
-                  })),
-                },
-                {
-                  label: "伺服器成員",
-                  type: "member",
-                  data: members?.map((member) => ({
-                    id: member.id,
-                    name: member.profile.name,
-                    icon: roleIconMap[member.role],
-                  })),
-                },
-              ]
-            }
+            data={[
+              {
+                label: "文字頻道",
+                type: "channel",
+                data: textChannels?.map((channel) => ({
+                  id: channel.id,
+                  name: channel.name,
+                  icon: iconMap[channel.type],
+                })),
+              },
+              {
+                label: "語音頻道",
+                type: "channel",
+                data: audioChannels?.map((channel) => ({
+                  id: channel.id,
+                  name: channel.name,
+                  icon: iconMap[channel.type],
+                })),
+              },
+              {
+                label: "視訊頻道",
+                type: "channel",
+                data: videoChannels?.map((channel) => ({
+                  id: channel.id,
+                  name: channel.name,
+                  icon: iconMap[channel.type],
+                })),
+              },
+              {
+                label: "伺服器成員",
+                type: "member",
+                data: members?.map((member) => ({
+                  id: member.id,
+                  name: member.profile.name,
+                  icon: roleIconMap[member.role],
+                })),
+              },
+            ]}
           />
         </div>
+        <Separator className="bg-zinc-200 dark:bg-zinc-700 rounded-md my-2" />
+        {!!textChannels?.length && (
+          <div className="mb-2">
+            <ServerSection
+              sectionType="channels"
+              channelType={ChannelType.TEXT}
+              role={role}
+              label="文字頻道"
+            />
+            <div className="space-y-[2px]">
+              {textChannels.map((channel) => (
+                <ServerChannel
+                  key={channel.id}
+                  channel={channel}
+                  role={role}
+                  server={server}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+        {!!audioChannels?.length && (
+          <div className="mb-2">
+            <ServerSection
+              sectionType="channels"
+              channelType={ChannelType.AUDIO}
+              role={role}
+              label="語音頻道"
+            />
+            <div className="space-y-[2px]">
+              {audioChannels.map((channel) => (
+                <ServerChannel
+                  key={channel.id}
+                  channel={channel}
+                  role={role}
+                  server={server}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+        {!!videoChannels?.length && (
+          <div className="mb-2">
+            <ServerSection
+              sectionType="channels"
+              channelType={ChannelType.VIDEO}
+              role={role}
+              label="視訊頻道"
+            />
+            <div className="space-y-[2px]">
+              {videoChannels.map((channel) => (
+                <ServerChannel
+                  key={channel.id}
+                  channel={channel}
+                  role={role}
+                  server={server}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+        {!!members?.length && (
+          <div className="mb-2">
+            <ServerSection
+              sectionType="members"
+              role={role}
+              label="伺服器成員"
+              server={server}
+            />
+            <div className="space-y-[2px]">
+              {members.map((member) => (
+                <ServerMember key={member.id} member={member} server={server} />
+              ))}
+            </div>
+          </div>
+        )}
       </ScrollArea>
     </div>
   );
