@@ -41,8 +41,8 @@ const formSchema = z.object({
     .min(1, {
       message: "Channel name is required.",
     })
-    .refine((name) => name !== "general", {
-      message: "Channel name cannot be 'general'",
+    .refine((name) => name !== "一般頻道", {
+      message: "Channel name cannot be '一般頻道'",
     }),
   type: z.nativeEnum(ChannelType),
 });
