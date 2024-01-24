@@ -101,7 +101,7 @@ export default async function handler(
         },
         data: {
           fileUrl: null,
-          content: "This message has been deleted.",
+          content: "此訊息已被刪除。",
           deleted: true,
         },
         include: {
