@@ -36,8 +36,8 @@
 - **樣式**: [Tailwind CSS](https://www.tailwindcss.cn/)
 - **資料庫**: [MySQL](https://www.mysql.com/)
 - **資料庫工具**: [Prisma](https://www.prisma.io/)
-- **雙向通訊**: [Socket.IO](https://socket.io/)
-- **即時通訊**: [WebRTC](https://webrtc.org/)
+- **即時通訊**: [Socket.IO](https://socket.io/)
+- **媒體串流**: [WebRTC](https://webrtc.org/)
 
 ### 💻 本地調試
 
